@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title>Mi Marcador</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+   
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+     <!-- Bootstrap para diferentes diseños-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+     <!-- StyleSheet local -->
+        <link href="./style.css" rel="stylesheet"/>
+     <!--Archivos JS-->
+        <script src="./js/gestorMarkers.js"></script>
+        <script src="./js/botones.js"></script>
+  
+     <!--Marcador Handler Src-->
+</head>
+<body style="margin: 0px; overflow: hidden;">
+    <a-scene embedded 
+        arjs="sourceType: webcam;debugUIEnabled: false;"
+        vr-mode-ui="enabled: false"     
+        gesture-detector
+        crear-botones>
+
+        <!-- Cámara -->
+        <a-entity camera></a-entity>
+
+        <a-assets>
+            <a-assets-item id="rebanada-model"
+                src="./assets/pizza_time/scene.gltf"
+            ></a-assets-item>
+        </a-assets>
+        <!--Marcador Pattern-->
+        <a-marker id="rebanada-marker"
+            type="pattern"
+            url="assets/marcadores/pattern-pizza.patt"
+            cursor="rayOrigin: mouse"
+            gestorDeMarcadores>
+
+            <!--Crear entidad para Modelo 3D-->
+            <a-entity id="pizza_3D"
+                position="-1 0 0"
+                scale="0.1 0.1 0.1"
+                gltf-model="#rebanada-model"
+                gesture-handler>
+            </a-entity>
+            <!--Carga los ingredientes-->
+            <a-plane position="0 0 0" width="1.5" height="1.5" rotation="-90 0 0">
+                <a-plane position="0 0.89 0.02" width="1.48" height="0.3" rotation="0 0 0" color="#b25bb0">
+                   <a-entity position="0 0 0.1" rotation="0 0 0"
+                        text="font:monoid; value: PIZZA PEPPERONI; color:black; width: 1.8; height:1; align:center;">
+                   </a-entity> 
+                </a-plane>
+                <a-entity position="0 0 0.1" rotation="0 0 0"
+                        text="font:monoid; color:black; width:2; align:center; 
+                            value: Salsa de tomate\n\nQueso mozarella\n\nQueso Parmesano\n\nPepperoni\n\nDeditos de queso\n\nSalami">
+                </a-entity>
+            </a-plane>
+
+        </a-marker>
+    </a-scene>
+
+    <!-- Botón div principal -->
+    <div id="botones-div"></div>
+
+</body>
+</html>
